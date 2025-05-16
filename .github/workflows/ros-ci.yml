@@ -7,45 +7,11 @@ name: ROS
 on:
   push:
   pull_request:
-    branches: 
+    branches:
       - main
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build-noetic:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-20.04
-    container:
-      image: ros:noetic-robot
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y git libasio-dev
-      - name: Create catkin workspace
-        run: mkdir -p /catkin_ws/src && cd /catkin_ws/src && /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash; catkin_init_workspace"
-      - name: Copy code to catkin workspace
-        run: cd /catkin_ws/src && git clone https://github.com/westonrobot/ugv_sdk.git
-      - name: Run catkin_make
-        run: cd /catkin_ws && /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash; catkin_make"
-
-  build-foxy:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-20.04
-    container:
-      image: ros:foxy
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y git libasio-dev
-      - name: Create colcon workspace
-        run: mkdir -p /ros2_ws/src && cd /ros2_ws/src && /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash"
-      - name: Copy code to colcon workspace
-        run: cd /ros2_ws/src && git clone https://github.com/westonrobot/ugv_sdk.git
-      - name: Run colcon build
-        run: cd /ros2_ws && /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash; colcon build"
-
   build-humble:
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
@@ -54,11 +20,24 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+        with:
+          path: /ros2_ws/src/scout_ugv_sdk
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y git libasio-dev
-      - name: Create colcon workspace
-        run: mkdir -p /ros2_ws/src && cd /ros2_ws/src && /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash"
-      - name: Copy code to colcon workspace
-        run: cd /ros2_ws/src && git clone https://github.com/westonrobot/ugv_sdk.git
       - name: Run colcon build
         run: cd /ros2_ws && /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash; colcon build"
+  build-jazzy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-24.04
+    container:
+      image: ros:jazzy
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+        with:
+          path: /ros2_ws/src/scout_ugv_sdk
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y git libasio-dev
+      - name: Run colcon build
+        run: cd /ros2_ws && /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash; colcon build"
+
