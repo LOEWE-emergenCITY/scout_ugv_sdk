@@ -21,11 +21,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
         with:
-          path: /ros2_ws/src/scout_ugv_sdk
+          path: src/scout_ugv_sdk
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y git libasio-dev
       - name: Run colcon build
-        run: cd /ros2_ws && /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash; colcon build"
+        run: . /opt/ros/${ROS_DISTRO}/setup.sh && colcon build
   build-jazzy:
     # The type of runner that the job will run on
     runs-on: ubuntu-24.04
@@ -35,9 +35,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
         with:
-          path: /ros2_ws/src/scout_ugv_sdk
+          path: src/scout_ugv_sdk
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y git libasio-dev
       - name: Run colcon build
-        run: cd /ros2_ws && /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash; colcon build"
+        run: . /opt/ros/${ROS_DISTRO}/setup.sh && colcon build
 
