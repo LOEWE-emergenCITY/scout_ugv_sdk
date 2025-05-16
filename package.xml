@@ -16,5 +16,7 @@
 
   <buildtool_depend condition="$ROS_VERSION == 1">catkin</buildtool_depend> 
   <build_depend>asio</build_depend>
+  <build_depend>dh-python</build_depend>
+  <build_depend>python3-setuptools</build_depend>
   <export></export>
 </package>
