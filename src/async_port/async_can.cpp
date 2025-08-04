@@ -124,6 +124,9 @@ void AsyncCAN::ReadFromPort(struct can_frame &rec_frame,
 }
 
 void AsyncCAN::SendFrame(const struct can_frame &frame) {
+  if (!socketcan_stream_.is_open()) {
+    return;
+  }
   socketcan_stream_.async_write_some(
       asio::buffer(&frame, sizeof(frame)),
       [](asio::error_code error, size_t bytes_transferred) {
