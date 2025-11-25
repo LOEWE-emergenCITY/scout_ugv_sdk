@@ -80,7 +80,7 @@ ScoutCommonSensorState ScoutRobot::GetCommonSensorState() {
 ///////////////////////////////////////////////////////////////////////////
 
 ScoutMiniOmniRobot::ScoutMiniOmniRobot(ProtocolVersion protocol)
-    : ScoutRobot(ProtocolVersion::UNKONWN) {
+    : ScoutRobot(ProtocolVersion::UNKNOWN) {
   if (protocol == ProtocolVersion::AGX_V1) {
     robot_ = new ScoutMiniOmniBaseV1();
   } else if (protocol == ProtocolVersion::AGX_V2) {
